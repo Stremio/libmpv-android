@@ -1,0 +1,6 @@
+install:
+  - wget https://github.com/Stremio/libmpv-android/releases/download/$VERSION/libmpv.tar.gz
+  - wget https://github.com/Stremio/libmpv-android/releases/download/$VERSION/build.tar.gz
+  - mkdir -p ~/.m2/repository/com/github/Stremio build
+  - tar -C ~/.m2/repository/com/github/Stremio -xvzf libmpv.tar.gz
+  - tar -C build -xvzf build.tar.gz
