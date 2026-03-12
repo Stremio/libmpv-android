@@ -53,7 +53,7 @@ mavenPublishing {
     )
 
     coordinates(
-        groupId = "dev.jdtech.mpv",
+        groupId = "com.github.Stremio",
         artifactId = "libmpv",
         version = "0.5.1"
     )
@@ -62,11 +62,11 @@ mavenPublishing {
         name = "libmpv-android"
         description = "libmpv for Android"
         inceptionYear = "2023"
-        url = "https://github.com/jarnedemeulemeester/libmpv-android"
+        url = "https://github.com/stremio/libmpv-android"
         licenses {
             license {
                 name = "MIT license"
-                url = "https://github.com/jarnedemeulemeester/libmpv-android/blob/main/LICENSE"
+                url = "https://github.com/stremio/libmpv-android/blob/main/LICENSE"
             }
         }
         developers {
@@ -77,13 +77,13 @@ mavenPublishing {
             }
         }
         scm {
-            url = "https://github.com/jarnedemeulemeester/libmpv-android.git"
-            connection = "scm:git@github.com:jarnedemeulemeester/libmpv-android.git"
-            developerConnection = "scm:git@github.com:jarnedemeulemeester/libmpv-android.git"
+            url = "https://github.com/stremio/libmpv-android.git"
+            connection = "scm:git@github.com:stremio/libmpv-android.git"
+            developerConnection = "scm:git@github.com:stremio/libmpv-android.git"
         }
         issueManagement {
             system = "GitHub"
-            url = "https://github.com/jarnedemeulemeester/libmpv-android/issues"
+            url = "https://github.com/stremio/libmpv-android/issues"
         }
     }
 }
