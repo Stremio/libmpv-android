@@ -42,7 +42,6 @@ android {
 
 mavenPublishing {
     publishToMavenCentral(automaticRelease = true)
-    signAllPublications()
 
     configure(
         platform = AndroidSingleVariantLibrary(
