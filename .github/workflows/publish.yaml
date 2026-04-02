@@ -24,6 +24,11 @@ jobs:
         run: |
           mkdir sdk
           ln -s ${ANDROID_HOME} ./sdk/android-sdk-linux
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y autoconf pkgconf libtool ninja-build python3-pip python3-jinja2 gperf nasm
+          sudo pip3 install --break-system-packages meson
       - name: Download dependencies
         working-directory: ./buildscripts
         run: ./download.sh
