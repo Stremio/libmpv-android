@@ -55,7 +55,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.github.Stremio",
         artifactId = "libmpv",
-        version = "1.0.0"
+        version = "1.0.0-stremio01"
     )
 
     pom {
