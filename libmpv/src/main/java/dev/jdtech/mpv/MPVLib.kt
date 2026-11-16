@@ -73,6 +73,19 @@ class MPVLib private constructor(nativePtr: Long) {
     }
     private external fun nativeCommand(instance: Long, cmd: Array<String>)
 
+    /**
+     * Sets the minimum level of mpv log messages delivered to [LogObserver]s
+     * and echoed to logcat ("no", "fatal", "error", "warn", "info", "v",
+     * "debug", "trace"). Defaults to "v". Verbose messages include the URLs
+     * mpv opens, so apps playing authenticated URLs may want "warn" or "no".
+     * Returns an mpv error code (0 on success).
+     */
+    fun requestLogMessages(level: String): Int {
+        checkCreated()
+        return nativeRequestLogMessages(nativeInstance, level)
+    }
+    private external fun nativeRequestLogMessages(instance: Long, level: String): Int
+
     fun setOptionString(name: String, value: String): Int {
         checkCreated()
         return nativeSetOptionString(nativeInstance, name, value)
@@ -145,6 +158,27 @@ class MPVLib private constructor(nativePtr: Long) {
         }
     }
 
+    fun event(eventId: Int) {
+        synchronized(observers) {
+            for (o in observers)
+                o.event(eventId)
+        }
+    }
+
+    fun eventEndFile(reason: Int, error: Int) {
+        synchronized(observers) {
+            for (o in observers)
+                o.eventEndFile(reason, error)
+        }
+    }
+
+    fun eventProperty(property: String) {
+        synchronized(observers) {
+            for (o in observers)
+                o.eventProperty(property)
+        }
+    }
+
     fun eventProperty(property: String, value: Long) {
         synchronized(observers) {
             for (o in observers)
@@ -173,27 +207,6 @@ class MPVLib private constructor(nativePtr: Long) {
         }
     }
 
-    fun eventProperty(property: String) {
-        synchronized(observers) {
-            for (o in observers)
-                o.eventProperty(property)
-        }
-    }
-
-    fun endFile(reason: Int, error: Int) {
-        synchronized(observers) {
-            for (o in observers)
-                o.endFile(reason, error)
-        }
-    }
-
-    fun event(eventId: Int) {
-        synchronized(observers) {
-            for (o in observers)
-                o.event(eventId)
-        }
-    }
-
     fun addLogObserver(o: LogObserver) {
         synchronized(logObservers) {
             logObservers.add(o)
@@ -214,17 +227,17 @@ class MPVLib private constructor(nativePtr: Long) {
     }
 
     interface EventObserver {
-        fun eventProperty(property: String)
-        fun eventProperty(property: String, value: Long)
-        fun eventProperty(property: String, value: Double)
-        fun eventProperty(property: String, value: Boolean)
-        fun eventProperty(property: String, value: String)
-        fun endFile(reason: Int, error: Int)
-        fun event(eventId: Int)
+        fun event(eventId: Int) {}
+        fun eventEndFile(reason: Int, error: Int) {}
+        fun eventProperty(property: String) {}
+        fun eventProperty(property: String, value: Long) {}
+        fun eventProperty(property: String, value: Double) {}
+        fun eventProperty(property: String, value: Boolean) {}
+        fun eventProperty(property: String, value: String) {}
     }
 
     interface LogObserver {
-        fun logMessage(prefix: String, level: Int, text: String)
+        fun logMessage(prefix: String, level: Int, text: String) {}
     }
 
     object MpvFormat {

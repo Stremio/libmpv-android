@@ -9,9 +9,9 @@ plugins {
 
 android {
     namespace = "dev.jdtech.mpv"
-    compileSdk = 36
+    compileSdk = 37
     buildToolsVersion = "37.0.0"
-    ndkVersion = "29.0.14206865"
+    ndkVersion = "30.0.16248370"
 
     defaultConfig {
         minSdk = 24
@@ -35,8 +35,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -55,7 +55,7 @@ mavenPublishing {
     coordinates(
         groupId = "com.github.Stremio",
         artifactId = "libmpv",
-        version = "1.0.0-stremio02"
+        version = "1.1.0"
     )
 
     pom {
@@ -65,8 +65,8 @@ mavenPublishing {
         url = "https://github.com/stremio/libmpv-android"
         licenses {
             license {
-                name = "MIT license"
-                url = "https://github.com/stremio/libmpv-android/blob/main/LICENSE"
+                name = "GNU General Public License v3.0 or later"
+                url = "https://www.gnu.org/licenses/gpl-3.0.txt"
             }
         }
         developers {

@@ -55,16 +55,28 @@ if [ ! -d "android-sdk-${os}" ]; then
 	unzip -q -d "android-sdk-${os}" "commandlinetools-${os}-${v_sdk}.zip"
 	rm "commandlinetools-${os}-${v_sdk}.zip"
 fi
-sdkmanager () {
-	local exe="./android-sdk-$os/cmdline-tools/latest/bin/sdkmanager"
+sdk_install () {
+	local exe="./android-sdk-$os/cmdline-tools/latest/bin/android"
+	[ -x "$exe" ] || exe="./android-sdk-$os/cmdline-tools/bin/android"
+	if [ -x "$exe" ]; then
+		"$exe" --no-metrics --sdk="${ANDROID_HOME}" sdk install \
+			"platforms/${v_platform}" \
+			"build-tools/${v_sdk_build_tools}" \
+			"ndk/${v_ndk}" \
+			"cmake/${v_cmake}"
+		return
+	fi
+
+	# Fall back to the legacy sdkmanager (e.g. the preinstalled SDK on CI runners)
+	exe="./android-sdk-$os/cmdline-tools/latest/bin/sdkmanager"
 	[ -x "$exe" ] || exe="./android-sdk-$os/cmdline-tools/bin/sdkmanager"
-	"$exe" --sdk_root="${ANDROID_HOME}" "$@"
+	echo y | "$exe" --sdk_root="${ANDROID_HOME}" \
+		"platforms;${v_platform}" \
+		"build-tools;${v_sdk_build_tools}" \
+		"ndk;${v_ndk}" \
+		"cmake;${v_cmake}"
 }
-echo y | sdkmanager \
-	"platforms;${v_platform}" \
-	"build-tools;${v_sdk_build_tools}" \
-	"ndk;${v_ndk}" \
-	"cmake;${v_cmake}"
+sdk_install
 
 # gas-preprocessor
 mkdir -p bin
